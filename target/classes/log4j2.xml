@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">
+			%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+		</Property>
+	</Properties>
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}"/>
+		</Console>
+		<RollingFile name="FileAppender" fileName="logs/countonrd.log" 
+					 filePattern="logs/countonrd-%d{yyyy-MM-dd}-%i.log" immediateFlush="true">
+			<PatternLayout>
+				<Pattern>${LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10MB" />
+                <TimeBasedTriggeringPolicy interval="1"/>
+			</Policies>
+			<DefaultRolloverStrategy max="10"/>
+		</RollingFile>
+	</Appenders>
+	
+	<Loggers>
+		<Logger name="com.rddesign" level="debug" additivity="false">
+			<AppenderRef ref="ConsoleAppender"/>
+			<AppenderRef ref="FileAppender"/>
+		</Logger>
+		<Logger name="org.springframework" level="INFO" additivity="true" />
+		<Logger name="org.springframework.security" level="INFO" additivity="true" />
+		<Logger name="org.hibernate" level="INFO" additivity="true" />
+		<Logger name="org.hibernate.SQL" level="INFO" additivity="true" />
+		<Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="INFO" additivity="true" />
+		<Logger name="org.apache.tomcat" level="INFO" />
+		<Logger name="org.apache.catalina" level="INFO" />
+		<Logger name="org.apache.coyote" level="INFO" />
+		<Logger name="javax.management" level="WARN" />
+		<Logger name="org.apache.cxf.phase.PhaseInterceptorChain" level="ERROR" />
+		<Logger name="security_audit" level="INFO" additivity="false" />
+		<Root level="info">
+			<AppenderRef ref="ConsoleAppender"/>
+			<AppenderRef ref="FileAppender"/>
+		</Root>
+	</Loggers>
+</Configuration>
